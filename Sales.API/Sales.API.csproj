@@ -309,11 +309,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sales.Common\Sales.Common.csproj">
-      <Project>{23c9dff8-8501-4b0d-8784-20b6ab50b4ba}</Project>
+      <Project>{08d5a660-a028-4675-b8da-ab2d9ade2628}</Project>
       <Name>Sales.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sales.Domain\Sales.Domain.csproj">
-      <Project>{64774fb8-5c88-4fb8-b26c-8834e5a701a2}</Project>
+      <Project>{481d7d73-c854-473a-b63a-b0567ce90918}</Project>
       <Name>Sales.Domain</Name>
     </ProjectReference>
   </ItemGroup>
