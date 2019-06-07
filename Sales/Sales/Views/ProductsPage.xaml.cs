@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Sales.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Products : ContentPage
+    public partial class ProductsPage : ContentPage
     {
-        public Products()
+        public ProductsPage()
         {
             InitializeComponent();
         }

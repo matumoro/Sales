@@ -14,5 +14,10 @@
         public DateTime PublishOn { get; set; }
         public string  Prueba { get; set; }
 
+        public override string ToString()
+        {
+            return this.Prueba;
+        }
+
     }
 }
