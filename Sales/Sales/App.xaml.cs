@@ -3,16 +3,22 @@ using Xamarin.Forms.Xaml;
 
 namespace Sales
 {
-    using Views;   
+    using System;
+    using Views;
     public partial class App : Application
     {
         public App()
         {
-            InitializeComponent();
+           InitializeComponent();
 
-            MainPage = new ProductsPage();
+           MainPage = new  NavigationPage(new ProductsPage());
         }
-
+/*
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+*/
         protected override void OnStart()
         {
             // Handle when your app starts
