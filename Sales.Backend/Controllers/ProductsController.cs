@@ -7,6 +7,9 @@
     using Backend.Models;
     using Common.Models;
     using System.Linq;
+    using Sales.Backend.Helpers;
+    using System.Web.UI.WebControls;
+    using System;
 
     public class ProductsController : Controller
     {
@@ -25,12 +28,12 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await this.db.Products.FindAsync(id);
-            if (product == null)
+            Product ProductView = await this.db.Products.FindAsync(id);
+            if (ProductView == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(ProductView);
         }
 
         // GET: Products/Create
@@ -41,16 +44,42 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Product product)
+        public async Task<ActionResult> Create(ProductView view )
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Products";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = $"{folder}/{pic}";
+                }
+
+                var product = this.ToProducts(view, pic);
+
                 this.db.Products.Add(product);
                 await this.db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return base.View(view);
+        }
+
+        private Product ToProducts(ProductView view, string pic)
+        {
+            return new Product
+            {
+                Description = view.Description,
+                ImagePath = pic,
+                IsAvailable = view.IsAvailable,
+                Price = view.Price,
+                ProductId=view.ProductId,
+                PublishOn = view.PublishOn,
+                Remarks=view.Remarks,
+
+            };
         }
 
         // GET: Products/Edit/5
@@ -60,26 +89,61 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Product product = await db.Products.FindAsync(id);
+
             if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+
+            var view = this.ToView(product);
+
+            return View(view);
+        }
+
+        private ProductView ToView(Product product)
+        {
+            return new ProductView
+            {
+                Description = product.Description,
+                ImagePath = product.ImagePath,
+                IsAvailable = product.IsAvailable,
+                Price = product.Price,
+                ProductId = product.ProductId,
+                PublishOn = product.PublishOn,
+                Remarks = product.Remarks,
+
+            };
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Product product)
+        public async Task<ActionResult> Edit(ProductView view)
         {
             if (ModelState.IsValid)
             {
-                this.db.Entry(product).State = EntityState.Modified;
+                var pic = view.ImagePath;
+                var folder = "~/Content/Products";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = $"{folder}/{pic}";
+                }
+
+                var product = this.ToProducts(view, pic);
+
+                this.db.Entry(product).State=EntityState.Modified;
                 await this.db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(product);
+
+            
+             return base.View(view);
+            
         }
+       
 
         // GET: Products/Delete/5
         public async Task<ActionResult> Delete(int? id)
