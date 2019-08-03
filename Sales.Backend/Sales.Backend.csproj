@@ -204,6 +204,19 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Products\apple-magic-mouse-2-pl1411974.jpg" />
+    <Content Include="Content\Products\Disipador Processor.jpg" />
+    <Content Include="Content\Products\dvd.jpg" />
+    <Content Include="Content\Products\fuente.jpg" />
+    <Content Include="Content\Products\Impresora.jpg" />
+    <Content Include="Content\Products\memoria.jpg" />
+    <Content Include="Content\Products\MotherBoard.jpg" />
+    <Content Include="Content\Products\mouse.jpg" />
+    <Content Include="Content\Products\padmouse.jpg" />
+    <Content Include="Content\Products\procesador.jpg" />
+    <Content Include="Content\Products\tkey.jpg" />
+    <Content Include="Content\Products\Tred.jpg" />
+    <Content Include="Content\Products\usb wiffi.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -264,7 +277,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Products\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
