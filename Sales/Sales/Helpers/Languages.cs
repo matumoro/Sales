@@ -33,6 +33,34 @@
         {
             get { return Resource.TurnOnInternet; }
         }
+        public static string AddProduct
+        {
+            get { return Resource.AddProduct; }
+        }
+        public static string Description
+        {
+            get { return Resource.Description; }
+        }
+        public static string DescriptionPlaceholder
+        {
+            get { return Resource.DescriptionPlaceholder; }
+        }
+        public static string Price
+        {
+            get { return Resource.Price; }
+        }
+        public static string PrincePlaceholder
+        {
+            get { return Resource.PrincePlaceholder; }
+        }
+        public static string Remarks
+        {
+            get { return Resource.Remarks; }
+        }
+        public static string Save
+        {
+            get { return Resource.Save; }
+        }
     }
 
 }
