@@ -11,33 +11,56 @@
 
     public class ProductsViewModel: BaseViewModel
     {
-        private ApiService apiService;
+        #region Services
+            private ApiService apiService;
+        #endregion
 
-        private bool isRefreshing;
+        #region Attibutes
+            private bool isRefreshing;
+            private ObservableCollection<Product> products;
+        #endregion
 
-        private ObservableCollection<Product> products;
+        #region Properties
+            public ObservableCollection<Product> Products
+            {
+                get { return this.products; }
+                set { SetValue(ref this.products, value); }
+            }
+            public bool IsRefreshing
+            {
+                get { return this.isRefreshing; }
+                set { SetValue(ref this.isRefreshing, value); }
+            }
 
-        public ObservableCollection<Product> Products
-        {
-            get { return this.products; }
-            set { SetValue(ref this.products, value); }
-        }
-        public bool IsRefreshing
-        {
-            get { return this.isRefreshing; }
-            set { SetValue(ref this.isRefreshing, value); }
-        }
-        public ProductsViewModel()
-        {
-            this.apiService = new ApiService();
-            this.LoadProducts();
-        }
+        #endregion
 
+        #region Constructors
+            public ProductsViewModel()
+            {
+                instance = this;
+                this.apiService = new ApiService();
+                this.LoadProducts();
+            }
+        #endregion
+
+        #region Singleton
+            private static ProductsViewModel instance;
+            public static ProductsViewModel GetInstance()
+            {
+                if (instance==null)
+                {
+                    return new ProductsViewModel();
+                }
+                return instance;
+            }
+        #endregion
+
+        #region Methods
         private async void LoadProducts()
         {
             this.IsRefreshing = true;
             var connection = await this.apiService.CheckConnection();
-            if(!connection.IsSuccess)
+            if (!connection.IsSuccess)
             {
                 this.IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
@@ -57,16 +80,18 @@
             this.Products = new ObservableCollection<Product>(list);
             this.IsRefreshing = false;
         }
+        #endregion
 
-        public ICommand RefreshCommand
-        { 
-            get
+        #region Commands
+            public ICommand RefreshCommand
             {
-                return new RelayCommand(LoadProducts);
+                get
+                {
+                    return new RelayCommand(LoadProducts);
 
-            } 
-        }
-
+                }
+            }
+        #endregion
 
     }
 }

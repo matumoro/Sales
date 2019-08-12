@@ -1,5 +1,6 @@
 ﻿namespace Sales.ViewModels
 {
+    using System.Linq;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Helpers;
@@ -124,6 +125,11 @@
                     Languages.Accept);
                     return;
                 }
+
+                var newProduct = (Product)response.Result;
+                var viewModel = ProductsViewModel.GetInstance();
+                viewModel.Products.Add(newProduct);
+
                 this.isRunning = false;
                 this.IsEnabled = true;
 
