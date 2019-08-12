@@ -1,15 +1,15 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Sales.Views;
-using System.Windows.Input;
-using Xamarin.Forms;
-
-namespace Sales.ViewModels
+﻿namespace Sales.ViewModels
 {
+    using System.Windows.Input;
+    using Xamarin.Forms;
+    using GalaSoft.MvvmLight.Command;
+    using Sales.Views;
     public class MainViewModel
     {
         public ProductsViewModel Products { get; set; }
 
-        public AddProductViewModel addProduct { get; set; }
+        public AddProductViewModel AddProduct { get; set; }
+
         public MainViewModel()
         {
             this.Products = new ProductsViewModel();
@@ -26,7 +26,7 @@ namespace Sales.ViewModels
 
         private async void GoToAddProduct()
         {
-            this.addProduct = new AddProductViewModel();
+            this.AddProduct = new AddProductViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new AddProductPage());
         }
     }

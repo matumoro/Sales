@@ -10,9 +10,7 @@
              BindingContext="{Binding AddProduct}">
             <StackLayout
                 Padding="5">
-                <Image
-                    Source="noproduct">
-                </Image>
+                <Image Source="noproduct.jpg"/>
                 <Label
                     FontSize="Small"
                     HorizontalOptions="Center"

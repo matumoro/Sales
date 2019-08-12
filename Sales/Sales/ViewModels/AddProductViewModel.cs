@@ -9,9 +9,11 @@
 
     public class AddProductViewModel:BaseViewModel
     {
+        #region Services
+            private ApiService apiService;
+        #endregion
 
         #region Attributes
-            private ApiService apiService;
             private bool isRunning;
             private bool isEnabled;
         #endregion
@@ -34,11 +36,11 @@
         #endregion
 
         #region Constructors
-            public AddProductViewModel()
-            {
+        public AddProductViewModel()
+        {
             this.apiService = new ApiService();
-                this.IsEnabled = true;
-            }
+            this.IsEnabled = true;
+        }
         #endregion
 
         #region Commands
@@ -52,6 +54,7 @@
 
             private async void Save()
             {
+
                 if (string.IsNullOrEmpty(this.Description))
                 {
                 await Application.Current.MainPage.DisplayAlert(
@@ -60,6 +63,7 @@
                     Languages.Accept);
                 return;
                 }
+
                 if (string.IsNullOrEmpty(this.Price))
                 {
                     await Application.Current.MainPage.DisplayAlert(
@@ -69,61 +73,63 @@
                 return;
                 }
 
-            var price = decimal.Parse(this.Price);
+                var price = decimal.Parse(this.Price);
 
-            if (price<0)
-            {
-                await Application.Current.MainPage.DisplayAlert(
+                if (price<0)
+                {
+                    await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
                     Languages.PriceError,
                     Languages.Accept);
                 return;
-            }
+                }
 
-            this.isRunning = true;
-            this.IsEnabled = false;
+                this.isRunning = true;
+                this.IsEnabled = false;
 
-            var connection = await this.apiService.CheckConnection();
-            if (!connection.IsSuccess)
-            {
-                this.isRunning = false;
-                this.IsEnabled = true;
-                await Application.Current.MainPage.DisplayAlert(
+                var connection = await this.apiService.CheckConnection();
+                if (!connection.IsSuccess)
+                {
+                    this.isRunning = false;
+                    this.IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
                     Languages.Error, 
                     connection.Message, 
                     Languages.Accept);
                 return;
-            }
+                }
 
-            var product = new Product
-            {
-                Description=this.Description,
-                Price=price,
-                Remarks=this.Remarks,
-            };
+                var product = new Product
+                {
+                    Description=this.Description,
+                    Price=price,
+                    Remarks=this.Remarks,
+                };
 
-            var url = Application.Current.Resources["UrlAPI"].ToString();
-            var prefix = Application.Current.Resources["UrlPrefix"].ToString();
-            var controller = Application.Current.Resources["UrlProductsController"].ToString();
-            var response = await this.apiService.Post(url, prefix, controller, product);
+                //var url = Application.Current.Resources["UrlAPI"].ToString();
+                //var prefix = Application.Current.Resources["UrlPrefix"].ToString();
+                //var controller = Application.Current.Resources["UrlProductsController"].ToString();
+                //var response = await this.apiService.Post(url, prefix, controller, product);
+                var url = Application.Current.Resources["UrlAPI"].ToString();
+                var response = await this.apiService.Post(url, "/Api", "/products", product);
 
-            if (!response.IsSuccess)
-            {
-                this.isRunning = false;
-                this.IsEnabled = true;
-                await Application.Current.MainPage.DisplayAlert(
+
+                if (!response.IsSuccess)
+                {
+                    this.isRunning = false;
+                    this.IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
                     response.Message,
                     Languages.Accept);
-                return;
+                    return;
+                }
+                this.isRunning = false;
+                this.IsEnabled = true;
+
+                await Application.Current.MainPage.Navigation.PopAsync();
 
             }
-            this.isRunning = false;
-            this.IsEnabled = true;
-
-            await Application.Current.MainPage.Navigation.PopAsync();
-
-        }
 
         #endregion
 
