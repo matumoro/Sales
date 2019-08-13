@@ -10,7 +10,12 @@
              BindingContext="{Binding AddProduct}">
             <StackLayout
                 Padding="5">
-                <Image Source="noproduct.jpg"/>
+                <Image
+                    Source="{Binding ImageSource}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
                 <Label
                     FontSize="Small"
                     HorizontalOptions="Center"

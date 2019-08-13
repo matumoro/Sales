@@ -42,5 +42,13 @@
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-</dict>
+		<key>NSCameraUsageDescription</key>
+       <string>This app needs Access to the camera to take potos.</string>
+       <key>NSPhotoLibraryUsageDescription</key>
+       <string>This app needs Access to potos.</string>
+       <key>NSMicrophoneUsageDescription</key>
+       <string>This app needs Access to microphone.</string>
+	   <key>NSPhotoLibraryAddUsageDescription</key>
+       <string>This app needs Access to the photo gallery.</string>
+  </dict>
 </plist>
