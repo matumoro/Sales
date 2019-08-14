@@ -3,6 +3,7 @@
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -10,6 +11,8 @@
     using System.Web.Http.Description;
     using Common.Models;
     using Domain.Models;
+    using Sales.API.Helpers;
+
     public class ProductsController : ApiController
     {
         private readonly DataContext db = new DataContext();
@@ -79,6 +82,23 @@
             {
                 return BadRequest(ModelState);
             }
+
+            var imageUrl = string.Empty;
+            if (product.ImageArray != null && product.ImageArray.Length > 0)
+            {
+                var stream = new MemoryStream(product.ImageArray);
+                var guid = Guid.NewGuid().ToString();
+                var file = $"{guid}.jpg";
+                var folder = "wwwroot\\images\\Products";
+                var fullPath = $"~/images/Products/{file}";
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
+
+                if (response)
+                {
+                    imageUrl = fullPath;
+                }
+            }
+                
 
             this.db.Products.Add(product);
             await this.db.SaveChangesAsync();

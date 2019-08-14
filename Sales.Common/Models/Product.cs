@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Product
     {
@@ -14,8 +15,7 @@
 
         [DataType (DataType.MultilineText)]
         public string Remarks { get; set; }
-
-
+               
         [Display(Name ="Image")]
         public string ImagePath { get; set; }
 
@@ -29,6 +29,9 @@
         [DataType(DataType.Date)]
         public DateTime PublishOn { get; set; }
 
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
+
         public string ImageFullPath
         {
             get
@@ -38,9 +41,10 @@
                     return "noproduct";
 
                 }
-                return $"https://salesbackend20190608022117.azurewebsites.net/{this.ImagePath.Substring(1)}";
-
-           }
+                // return $"https://salesbackend20190608022117.azurewebsites.net/{this.ImagePath.Substring(1)}";
+                
+                return $"https://salesapi20190608022707.azurewebsites.net/{this.ImagePath.Substring(1)}";
+            }
         }
 
         public override string ToString()
