@@ -1,6 +1,7 @@
 ﻿namespace Sales.API.Helpers
 {
     using System.IO;
+    using System.Web;
 
     public class FilesHelper
     {
@@ -9,7 +10,7 @@
             try
             {
                 stream.Position = 0;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), folder, name);
+                var path = Path.Combine(HttpContext.Current.Server.MapPath(folder), name);
                 File.WriteAllBytes(path, stream.ToArray());
             }
             catch

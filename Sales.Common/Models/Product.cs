@@ -41,8 +41,7 @@
                     return "noproduct";
 
                 }
-                // return $"https://salesbackend20190608022117.azurewebsites.net/{this.ImagePath.Substring(1)}";
-                
+                               
                 return $"https://salesapi20190608022707.azurewebsites.net/{this.ImagePath.Substring(1)}";
             }
         }
