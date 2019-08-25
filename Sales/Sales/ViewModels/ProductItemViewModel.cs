@@ -13,7 +13,7 @@
     public class ProductItemViewModel : Product
     {
         #region Attributes
-        private ApiService apiService;
+        private readonly ApiService apiService;
         #endregion
 
         #region Constructors
@@ -36,7 +36,9 @@
         }
         private async void EditProduct()
         {
+            MainViewModel.GetInstance().EditProduct = new EditProductViewModel(this);
             await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+        }
             
         public ICommand DeleteProductCommand
         {
