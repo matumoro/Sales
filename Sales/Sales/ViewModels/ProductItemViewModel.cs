@@ -7,12 +7,13 @@
     using Services;
     using Xamarin.Forms;
     using Sales.Helpers;
+    using System;
+    using Sales.Views;
 
-
-    public class ProductItemViewModel:Product
+    public class ProductItemViewModel : Product
     {
         #region Attributes
-           private ApiService apiService;
+        private ApiService apiService;
         #endregion
 
         #region Constructors
@@ -20,12 +21,23 @@
         {
             this.apiService = new ApiService();
         }
-
-
-            
         #endregion
 
         #region Commands
+
+        public ICommand EditProductCommand
+        {
+            get
+            {
+                return new RelayCommand(EditProduct);
+            }
+
+
+        }
+        private async void EditProduct()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+            
         public ICommand DeleteProductCommand
         {
             get
@@ -37,9 +49,9 @@
 
         private async void DeleteProduct()
         {
-            var answer = await Application.Current.MainPage.DisplayAlert(Languages.Confirm, 
-                Languages.DeleteConfirmation, 
-                Languages.Yes, 
+            var answer = await Application.Current.MainPage.DisplayAlert(Languages.Confirm,
+                Languages.DeleteConfirmation,
+                Languages.Yes,
                 Languages.No);
             if (!answer)
             {
@@ -62,11 +74,11 @@
                 return;
             }
 
-            var productsViewModel=ProductsViewModel.GetInstance();
+            var productsViewModel = ProductsViewModel.GetInstance();
 
             var deletedProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
 
-            if (deletedProduct!=null)
+            if (deletedProduct != null)
             {
                 productsViewModel.Products.Remove(deletedProduct);
             }
