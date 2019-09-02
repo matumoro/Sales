@@ -7,7 +7,7 @@
              Title="{i18n:Translate Products}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="ic_action_add_circle_outline" Command="{Binding AddProductCommand}"/>
-    </ContentPage.ToolbarItems> 
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Products}"
@@ -26,16 +26,20 @@
                                 <MenuItem Text="{i18n:Translate Delete}" Command="{Binding DeleteProductCommand}" IsDestructive="True"/>
                             </ViewCell.ContextActions>
                             <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding EditProductCommand}"/>
+                                </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Image
                                     Grid.Column="0"
                                     WidthRequest="100"
                                     Source="{Binding ImageFullPath}">
-                                                                       
+
                                 </Image>
 
                                 <StackLayout
@@ -55,14 +59,19 @@
                                     HorizontalOptions="End"
                                     Text="{Binding Price,StringFormat='value is {0:C2}'}"
                                     VerticalOptions="Center">
-                                   
+
                                 </Label>
+                                <Image
+                                    Grid.Column="3"
+                                    Source="ic_chevron_right"
+                                    VerticalOptions="Center">
+                                </Image>
                             </Grid>
-                        </ViewCell>      
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

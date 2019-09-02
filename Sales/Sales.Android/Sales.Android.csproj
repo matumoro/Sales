@@ -103,7 +103,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_chevron_right.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sales\Sales.csproj">
       <Project>{83298FFD-E03B-4766-8E84-1F6A4AF16A6D}</Project>

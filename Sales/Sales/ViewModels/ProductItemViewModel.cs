@@ -14,6 +14,8 @@
     {
         #region Attributes
         private readonly ApiService apiService;
+        private bool IsRunning;
+        private bool IsEnabled;
         #endregion
 
         #region Constructors
@@ -60,9 +62,14 @@
                 return;
             }
 
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
             var connection = await this.apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
+                this.IsRunning = false;
+                this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, connection.Message, Languages.Accept);
                 return;
             }
@@ -72,18 +79,24 @@
 
             if (!response.IsSuccess)
             {
+                this.IsRunning = false;
+                this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
                 return;
             }
 
             var productsViewModel = ProductsViewModel.GetInstance();
 
-            var deletedProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
+            var deletedProduct = productsViewModel.MyProducts.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
 
             if (deletedProduct != null)
             {
-                productsViewModel.Products.Remove(deletedProduct);
+                productsViewModel.MyProducts.Remove(deletedProduct);
             }
+            productsViewModel.RefreshList();
+            this.IsRunning = false;
+            this.IsEnabled = true;
+            await Application.Current.MainPage.Navigation.PopAsync();
 
         }
 
